@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>To-Do</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
+    
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.min.css.map"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"/> -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/> -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
+  
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light justify-content-between" style="background-color: black;">
+          
+        <a class="navbar-brand" href="#" style="color:beige">TO-DO</a>
+
+        
+          <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
+            <button class="btn btn-outline-danger my-2 my-sm-1"  type="submit">Log Out</button>
+          </form>
+        <!-- </div> -->
+      </nav>
+      <br/>
+      <center><h2 style="color: black;"><b>WELCOME </b><b style="color:red;"><%= user.name %> !</b></h2></center>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="shadow p-3 mb-5 bg-white rounded" style="width:600px; color: rgb(0, 0, 0);">
+            <center><h3><b>ADD ITEMS</b></h3>
+            <!-- <form action="/item/" method="POST"> -->
+                <!-- <div class="input-group mb-3">
+                  <div class="container">
+                  </div> -->
+                  <div class="row">
+                    <div class="col-2">
+                      <br/>
+                      <img src="https://img.icons8.com/cotton/40/000000/checklist--v1.png"/>
+                      <br/>
+                      <br/>
+                      <br/>
+                      <img src="https://img.icons8.com/plasticine/40/000000/clock.png"/>
+                         
+                    </div>
+                    <div class="col-10">
+                      <br/>
+                      <input type="text" class="form-control" placeholder="Add work to do" name="item" id="item" aria-label="Username" style = "border-color: black;" aria-describedby="basic-addon1">
+                      <br/>
+                      <br/>
+                      <div class="container " >
+                        <input type="text" id="picker" placeholder="Add Manually YYYY-MM-DD HH:MM:SS" style = "border-color: black;" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                
+               <br/>
+                <button class="btn btn-danger" onclick="addItem()" type="submit">ADD</button>
+                <br/>
+
+                <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitlle">User Manual</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" style="align-content: flex-start;;" >
+                        <center>
+                          <ul>
+                            <li>Add Your Daily To-Do Work</li>
+                            <li>Date and Time Input is manual</li>
+                            <li>Format if Date and Time input : YYYY-MM-DD HH:MM:SS</li>
+                            <li>Done: Status of your work<ul>
+                              <li>Green: Completed</li>
+                              <li>Yellow: About to Complete</li>
+                              <li>Red: Not Completed on time</li>
+                              <li>Blue: Reset the status</li>
+                            </ul></li>
+                            <li>Delete: You can Delete your work if something goes wrong</li>
+                            <li>Edit: You can edit your work reschedule the date</li>
+                          </ul>
+                        </center>
+                      
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a data-toggle="modal" data-target="#modal"><img src="https://img.icons8.com/offices/30/000000/user-manual.png"/></a>   
+            <!-- </form> -->
+        </center>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr style="background-color: black; color: beige;">
+            <th scope="col">#</th>
+            <th scope="col">Work Pending</th>
+            <th scopr="col">Completion Date  &  Time</th>
+           
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Completed</th>
+          </tr>
+        </thead>
+        <tbody id="itemlist">
+          <% for(var i =0;i<item.length;i++) { %>
+          
+          
+          <% if ( item[i].status === 1 ) { %>
+            <tr class="bg-success">
+          <th scope="row"><%= i+1 %></th>
+          <td><%= item[i].item %></td>
+          <td><%= item[i].date %></td>
+          <div class="modal fade" id="modal<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle<%= i+1 %>">Edit your to do</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">To-Do</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" name="itm" id="cname<%= i+1 %>" aria-label="Username" value="<%= item[i].item %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                    </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">Date</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" name="datetime" id="pick<%= i+1 %>" aria-label="Username" value="<%= item[i].date %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                      </div>
+                     <center> 
+                            <button class="btn btn-success" onclick="change('<%= item[i]._id %>','cname<%= i+1 %>','pick<%= i+1 %>')" type="submit">Change</button>
+                          </center>
+                
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <td><button type="submit" class="btn btn-primary" id="button<%= i+1 %>" data-toggle="modal" data-target="#modal<%= i+1 %>">Edit</button></td>
+          <td><button type="submit"  class="btn btn-danger" onclick="remove('<%= item[i]._id %>')">Delete</button></td>
+                  <div class="modal fade" id="modl<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModlCenterTitle<%= i+1 %>">Edit Your To Do Status</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>            
+                      <div class="modal-body">
+                        <center>
+
+                        <h2><%= item[i].item %></h2>
+                        <h6><%= item[i].date %></h6>
+                        
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <label class="btn btn-outline-success active">
+                            <input type="radio" name="options" id="option1" value="1" checked>Completed
+                          </label>
+                          <label class="btn btn-outline-warning">
+                            <input type="radio" name="options" id="option2" value="2">Half Completed
+                          </label>
+                          <label class="btn btn-outline-danger">
+                            <input type="radio" name="options" id="option3" value="3">Not Completed
+                          </label>
+                          <label class="btn btn-outline-primary">
+                            <input type="radio" name="options" id="option4" value="4">Reset
+                          </label>
+                        </div><br/>
+                        <br/>
+                        <button class="btn btn-primary" onclick="done('<%=  item[i]._id  %>')">Change</button>
+                      </center>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+          <td><button type="submit"  class="btn btn-success" id="buton<%= i+1 %>" data-toggle="modal" data-target="#modl<%= i+1 %>" >Done</button></td>
+        </tr>
+        <% } else if (item[i].status === 2) { %>
+          <tr class="bg-warning">
+            <th scope="row"><%= i+1 %></th>
+            <td><%= item[i].item %></td>
+            <td><%= item[i].date %></td>
+            <div class="modal fade" id="modal<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle<%= i+1 %>">Edit your to do</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">To-Do</span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="" name="itm" id="cname<%= i+1 %>" aria-label="Username" value="<%= item[i].item %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                      </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">Date</span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="" name="datetime" id="pick<%= i+1 %>" aria-label="Username" value="<%= item[i].date %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                        </div>
+                       <center> 
+                              <button class="btn btn-success" onclick="change('<%= item[i]._id %>','cname<%= i+1 %>','pick<%= i+1 %>')" type="submit">Change</button>
+                            </center>
+                  
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <td><button type="submit" class="btn btn-primary" id="button<%= i+1 %>" data-toggle="modal" data-target="#modal<%= i+1 %>">Edit</button></td>
+            <td><button type="submit"  class="btn btn-danger" onclick="remove('<%= item[i]._id %>')">Delete</button></td>
+                    <div class="modal fade" id="modl<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModlCenterTitle<%= i+1 %>">Edit Your To Do Status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>            
+                        <div class="modal-body">
+                          <center>
+  
+                          <h2><%= item[i].item %></h2>
+                          <h6><%= item[i].date %></h6>
+                          
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-outline-success active">
+                              <input type="radio" name="options" id="option1" value="1" checked>Completed
+                            </label>
+                            <label class="btn btn-outline-warning">
+                              <input type="radio" name="options" id="option2" value="2">Half Completed
+                            </label>
+                            <label class="btn btn-outline-danger">
+                              <input type="radio" name="options" id="option3" value="3">Not Completed
+                            </label>
+                            <label class="btn btn-outline-primary">
+                              <input type="radio" name="options" id="option4" value="4">Reset
+                            </label>
+                          </div><br/>
+                          <br/>
+                          <button class="btn btn-primary" onclick="done('<%=  item[i]._id  %>')">Change</button>
+                        </center>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+            <td><button type="submit"  class="btn btn-success" id="buton<%= i+1 %>" data-toggle="modal" data-target="#modl<%= i+1 %>" >Done</button></td>
+          </tr>
+          <% } else if (item[i].status === 3) { %>
+            <tr class="bg-danger">
+              <th scope="row"><%= i+1 %></th>
+              <td><%= item[i].item %></td>
+              <td><%= item[i].date %></td>
+              <div class="modal fade" id="modal<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalCenterTitle<%= i+1 %>">Edit your to do</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">To-Do</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" name="itm" id="cname<%= i+1 %>" aria-label="Username" value="<%= item[i].item %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                        </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">Date</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="" name="datetime" id="pick<%= i+1 %>" aria-label="Username" value="<%= item[i].date %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                          </div>
+                         <center> 
+                                <button class="btn btn-success" onclick="change('<%= item[i]._id %>','cname<%= i+1 %>','pick<%= i+1 %>')" type="submit">Change</button>
+                              </center>
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <td><button type="submit" class="btn btn-primary" id="button<%= i+1 %>" data-toggle="modal" data-target="#modal<%= i+1 %>">Edit</button></td>
+              <td><button type="submit"  class="btn btn-danger" onclick="remove('<%= item[i]._id %>')">Delete</button></td>
+                      <div class="modal fade" id="modl<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModlCenterTitle<%= i+1 %>">Edit Your To Do Status</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>            
+                          <div class="modal-body">
+                            <center>
+    
+                            <h2><%= item[i].item %></h2>
+                            <h6><%= item[i].date %></h6>
+                            
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-outline-success active">
+                                <input type="radio" name="options" id="option1" value="1" checked>Completed
+                              </label>
+                              <label class="btn btn-outline-warning">
+                                <input type="radio" name="options" id="option2" value="2">Half Completed
+                              </label>
+                              <label class="btn btn-outline-danger">
+                                <input type="radio" name="options" id="option3" value="3">Not Completed
+                              </label>
+                              <label class="btn btn-outline-primary">
+                                <input type="radio" name="options" id="option4" value="4">Reset
+                              </label>
+                            </div><br/>
+                            <br/>
+                            <button class="btn btn-primary" onclick="done('<%=  item[i]._id  %>')">Change</button>
+                          </center>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+    
+              <td><button type="submit"  class="btn btn-success" id="buton<%= i+1 %>" data-toggle="modal" data-target="#modl<%= i+1 %>" >Done</button></td>
+            </tr>
+        <% } else { %>
+          <tr>
+            <th scope="row"><%= i+1 %></th>
+            <td><%= item[i].item %></td>
+            <td><%= item[i].date %></td>
+            <div class="modal fade" id="modal<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle<%= i+1 %>">Edit your to do</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">To-Do</span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="" name="itm" id="cname<%= i+1 %>" aria-label="Username" value="<%= item[i].item %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                      </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">Date</span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="" name="datetime" id="pick<%= i+1 %>" aria-label="Username" value="<%= item[i].date %>" style = "border-color: black;" aria-describedby="basic-addon1">
+                        </div>
+                       <center> 
+                              <button class="btn btn-success" onclick="change('<%= item[i]._id %>','cname<%= i+1 %>','pick<%= i+1 %>')" type="submit">Change</button>
+                            </center>
+                  
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <td><button type="submit" class="btn btn-primary" id="button<%= i+1 %>" data-toggle="modal" data-target="#modal<%= i+1 %>">Edit</button></td>
+            <td><button type="submit"  class="btn btn-danger" onclick="remove('<%= item[i]._id %>')">Delete</button></td>
+                    <div class="modal fade" id="modl<%= i+1 %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModlCenterTitle<%= i+1 %>">Edit Your To Do Status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>            
+                        <div class="modal-body">
+                          <center>
+  
+                          <h2><%= item[i].item %></h2>
+                          <h6><%= item[i].date %></h6>
+                          
+                          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                            <label class="btn btn-outline-success active">
+                              <input type="radio" name="options" id="option1" value="1" checked>Completed
+                            </label>
+                            <label class="btn btn-outline-warning">
+                              <input type="radio" name="options" id="option2" value="2">Half Completed
+                            </label>
+                            <label class="btn btn-outline-danger">
+                              <input type="radio" name="options" id="option3" value="3">Not Completed
+                            </label>
+                          </div><br/>
+                          <br/>
+                          <button class="btn btn-primary" onclick="done('<%=  item[i]._id  %>')">Change</button>
+                        </center>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+            <td><button type="submit"  class="btn btn-success" id="buton<%= i+1 %>" data-toggle="modal" data-target="#modl<%= i+1 %>" >Done</button></td>
+          </tr>
+          <% } %>
+      
+      
+      <% } %>
+
+
+
+
+        </tbody>
+      </table>
+    </div>
+</div>
+</div>
+
+
+<script>
+  $('#picker').datetimepicker({
+    timepicker: true,
+    datepicker: true,
+    format: 'Y-m-d H-i',
+    value: '2020-8-1 09:45',
+    hours12: false,
+    step: 30,
+    yearStart: 2020,
+    yearEnd: 2030
+  })
+</script>
+<script>
+   var i = 0;
+  const app = document.getElementById("itemlist");
+  // console.log(axios)
+  // axios.get('http://localhost:3000/items/').then(res => {
+  //   console.log(res.data)
+  //   for (let itm in res.data){
+  //     i = i+1
+  //     // alert(res.data[itm].item)
+  //     app.innerHTML += `
+  //     <tr>
+  //           <th scope="row">${i}</th>
+  //           <td>${res.data[itm].item}</td>
+            
+  //           <td><button type="submit" class="btn btn-primary" id="button${i}" data-toggle="modal" data-target="#modal${i}">Edit</button></td>
+  //           <td><button type="submit"  class="btn btn-danger" onclick="remove('${res.data[itm]._id}')">Delete</button></td>
+  //           <td><button type="submit"  class="btn btn-success" onclick="done('${res.data[itm]._id}')">Done</button></td>
+  //         </tr>`
+  //   }
+  // });
+
+  const addItem = () =>{
+    // alert("hlllo")
+    var name = document.getElementById("item").value;
+    var datetime = document.getElementById("picker").value;
+    // console.log(name,datetime)
+    // console.log('<%= user.id %>')
+    axios.post('http://localhost:3000/users/<%= user._id %>/item',{
+      item: name,
+      date: datetime,
+      user: '<%= user.id %>'
+  }).then(res =>{
+    console.log(res.data);
+    i = i+1;
+      // alert(res.data[itm].item)
+      app.innerHTML += `
+      <tr>
+            <th scope="row">${i}</th>
+            <td>${res.data.item}</td>
+            <td>${res.data.date}</td>
+            <div class="modal fade" id="modal${i}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1" style="background-color: black;color: beige;">To-Do</span>
+                      </div>
+                      <input type="text" class="form-control" placeholder="" name="itm" id="cname${i}" aria-label="Username" value="${res.data.item}" style = "border-color: black;" aria-describedby="basic-addon1">
+                      <div class="input-group-append">
+                          <button class="btn btn-success" onclick="change('${res.data._id}','cname${i}')" type="submit">Change</button>
+                        </div>  
+                  </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <td><button type="submit" class="btn btn-primary" id="button${i}" data-toggle="modal" data-target="#modal${i}">Edit</button></td>
+            <td><button type="submit" class="btn btn-danger" onclick="remove('${res.data._id}')">Delete</button></td>
+            <td><button type="submit"  class="btn btn-success" onclick="done('${res.data._id}')">Done</button></td>
+          </tr>
+      `
+    
+    // res.send(item)
+  });
+  }
+
+  function change(id,iid,iiid){
+    // alert(id)
+    // alert(iid)
+    // alert(iiid)
+    var chngname = document.getElementById(iid).value;
+    var chngdate = document.getElementById(iiid).value;
+    // alert(chngname);
+    axios.put('http://localhost:3000/users/<%= user._id %>/'+id,{
+      item : chngname,
+      date : chngdate,
+      user : '<%= user._id %>'
+    }).then(res =>{
+      console.log(res.data);
+      alert("changed successfully")
+    })
+    .catch(err => {
+    console.log(err);
+  });
+  }
+  
+  function remove(id){
+    // alert(id)
+    axios.delete('http://localhost:3000/users/<%= user._id %>/'+id,{_id:id}).then(res =>{
+      alert("DELETED");
+      console.log(res.data);
+    })
+  }
+
+  function done(id){
+    // alert(id)
+    a = document.querySelector('input[name="options"]:checked').value
+    // alert(a)
+    axios.put('http://localhost:3000/users/<%= user._id %>/'+id+'/status',{
+      status: a
+    }).then(res=>{
+      console.log(res.data);
+      alert("Changed successfully")
+    })
+  }
+  
+</script>
+
+
+<!-- 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+<script src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script> -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+  </body>
+</html>
